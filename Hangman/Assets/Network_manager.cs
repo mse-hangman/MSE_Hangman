@@ -7,12 +7,14 @@ using UnityEngine.Networking;
 using TMPro;
 
 
-public class MemberData
+public class MemberData : LoginData
+{
+    public string User_nickname;
+}
+public class LoginData
 {
     public string User_id;
     public string User_password;
-    public string User_nickname;
-
 }
 
 public class Network_manager  : MonoBehaviour
@@ -22,7 +24,18 @@ public class Network_manager  : MonoBehaviour
     public TextMeshProUGUI User_id;
     public TextMeshProUGUI User_password;
     public TextMeshProUGUI User_nickname;
+
+    public TextMeshProUGUI Login_id;
+    public TextMeshProUGUI Login_password;
     private void Awake() { DontDestroyOnLoad(gameObject); }
+    public void SendLoginData()
+    {
+        LoginData login_data = new LoginData();
+        login_data.User_id = Login_id.text;
+        login_data.User_password = Login_password.text;
+        string json = JsonUtility.ToJson(login_data);
+        StartCoroutine(Upload("http://localhost/hellomvc/unitymapping", json));
+    }
     public void SendMemberData()
     {
         MemberData data = new MemberData();

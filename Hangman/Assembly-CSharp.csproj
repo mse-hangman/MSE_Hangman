@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Assets\Sign_in.cs" />
     <Compile Include="Assets\Network_manager.cs" />
+    <Compile Include="Assets\Game.cs" />
+    <Compile Include="Assets\wORD.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
