@@ -10,8 +10,8 @@ public class  Word : MonoBehaviour
     
      public Word()
     {
-        word.Add("HELLOddddd");
-        word.Add("MYNAMddddd");
+        word.Add("HELLOIS");
+        word.Add("MYNAMHI");
     }
     public string GetWord()
     {

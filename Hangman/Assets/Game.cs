@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
     private bool win = false;
     public Sprite[] sp;
     public GameObject bear;
+
     private int death_count=1;
 
     private void Awake()
@@ -65,18 +66,20 @@ public class Game : MonoBehaviour
         {
             if (txt.text ==word.curWord)
             {
+
                 Debug.Log("win");
             }
         }
         else
         {
-            
-            bear.GetComponent<Image>().sprite=sp[death_count];
+            bear.GetComponent<Image>().sprite = sp[death_count];
             death_count++;
             if (death_count == 9)
             {
                 Debug.Log("lose");
             }
+
         }
     }
+
 }
