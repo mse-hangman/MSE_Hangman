@@ -8,10 +8,13 @@ public class Game : MonoBehaviour
     Word word = new Word();
     string curWord;
     public TextMeshProUGUI txt;
+    
     private string reponse;
     private bool win = false;
     public Sprite[] sp;
     public GameObject bear;
+    public GameObject resultPanel;
+    public GameObject answerPanel;
 
     private int death_count=1;
 
@@ -66,20 +69,41 @@ public class Game : MonoBehaviour
         {
             if (txt.text ==word.curWord)
             {
-
+                resultPanel.SetActive(true);
+                resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Win";
                 Debug.Log("win");
             }
         }
         else
         {
-            bear.GetComponent<Image>().sprite = sp[death_count];
             death_count++;
+            bear.GetComponent<Image>().sprite = sp[death_count];
             if (death_count == 9)
             {
+                resultPanel.SetActive(true);
+                resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Lose";
                 Debug.Log("lose");
             }
 
         }
     }
-
+    public void SetActiveAnswer()
+    {
+        answerPanel.SetActive(true);
+    }
+    public void Direct_Verification()
+    {
+        if (curWord == answerPanel.GetComponentInChildren<TMP_InputField>().text)
+        {
+            answerPanel.SetActive(false);
+            resultPanel.SetActive(true);
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Win";
+        }
+        else
+        {
+            answerPanel.SetActive(false);
+            resultPanel.SetActive(true);
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Lose";
+        }
+    }
 }

@@ -16,6 +16,11 @@ public class LoginData
     public string User_id;
     public string User_password;
 }
+public class UserData : MemberData
+{
+    public string User_win;
+    public string User_lose;
+}
 
 public class Network_manager  : MonoBehaviour
 {
@@ -28,22 +33,40 @@ public class Network_manager  : MonoBehaviour
     public TextMeshProUGUI Login_id;
     public TextMeshProUGUI Login_password;
     private void Awake() { DontDestroyOnLoad(gameObject); }
-    public void SendLoginData()
+    public void LoginData()
     {
         LoginData login_data = new LoginData();
         login_data.User_id = Login_id.text;
         login_data.User_password = Login_password.text;
         string json = JsonUtility.ToJson(login_data);
-        StartCoroutine(Upload("http://localhost/hellomvc/unitymapping", json));
+        StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
     }
-    public void SendMemberData()
+    public void SignInData()
     {
         MemberData data = new MemberData();
         data.User_id = User_id.text;
         data.User_nickname = User_nickname.text;
         data.User_password = User_password.text;
         string json = JsonUtility.ToJson(data);
-        StartCoroutine(Upload("http://localhost/hellomvc/unitymapping", json));
+        StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
+    }
+    public void IdCheckData()
+    {
+        MemberData data = new MemberData();
+        data.User_id = User_id.text;
+        data.User_nickname = User_nickname.text;
+        data.User_password = User_password.text;
+        string json = JsonUtility.ToJson(data);
+        StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
+    }
+    public void NicknameCheckData()
+    {
+        MemberData data = new MemberData();
+        data.User_id = User_id.text;
+        data.User_nickname = User_nickname.text;
+        data.User_password = User_password.text;
+        string json = JsonUtility.ToJson(data);
+        StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
     }
     IEnumerator Upload(string URL,string json)
     {
@@ -63,7 +86,8 @@ public class Network_manager  : MonoBehaviour
             }
             else
             {
-                Debug.Log(request.downloadHandler.text);
+                //Debug.Log(request.downloadHandler.text);
+                Debug.Log("success");
             }
         }
     }
