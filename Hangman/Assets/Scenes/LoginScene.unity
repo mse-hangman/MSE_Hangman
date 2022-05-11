@@ -1307,6 +1307,8 @@ MonoBehaviour:
   User_id: {fileID: 389584811}
   User_password: {fileID: 863239032}
   User_nickname: {fileID: 1208119630}
+  Login_id: {fileID: 0}
+  Login_password: {fileID: 0}
 --- !u!4 &385107050
 Transform:
   m_ObjectHideFlags: 0
@@ -3295,7 +3297,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 385107049}
         m_TargetAssemblyTypeName: Network_manager, Assembly-CSharp
-        m_MethodName: SendMemberData
+        m_MethodName: SignupData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

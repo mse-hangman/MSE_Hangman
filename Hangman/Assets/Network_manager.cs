@@ -9,12 +9,12 @@ using TMPro;
 
 public class MemberData : LoginData
 {
-    public string User_nickname;
+    public string nickname;
 }
 public class LoginData
 {
-    public string User_id;
-    public string User_password;
+    public string id;
+    public string pw;
 }
 public class UserData : MemberData
 {
@@ -36,35 +36,29 @@ public class Network_manager  : MonoBehaviour
     public void LoginData()
     {
         LoginData login_data = new LoginData();
-        login_data.User_id = Login_id.text;
-        login_data.User_password = Login_password.text;
+        
         string json = JsonUtility.ToJson(login_data);
         StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
     }
-    public void SignInData()
+    public void SignupData()
     {
         MemberData data = new MemberData();
-        data.User_id = User_id.text;
-        data.User_nickname = User_nickname.text;
-        data.User_password = User_password.text;
+        data.id = User_id.text;
+        data.nickname = User_nickname.text;
+        data.pw = User_password.text;
         string json = JsonUtility.ToJson(data);
-        StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
+        StartCoroutine(Upload("http://3.35.3.123:8080/sign-up", json));
     }
     public void IdCheckData()
     {
         MemberData data = new MemberData();
-        data.User_id = User_id.text;
-        data.User_nickname = User_nickname.text;
-        data.User_password = User_password.text;
+       
         string json = JsonUtility.ToJson(data);
         StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
     }
     public void NicknameCheckData()
     {
         MemberData data = new MemberData();
-        data.User_id = User_id.text;
-        data.User_nickname = User_nickname.text;
-        data.User_password = User_password.text;
         string json = JsonUtility.ToJson(data);
         StartCoroutine(Upload("http://52.79.234.207:8080/sign-in", json));
     }
@@ -86,8 +80,7 @@ public class Network_manager  : MonoBehaviour
             }
             else
             {
-                //Debug.Log(request.downloadHandler.text);
-                Debug.Log("success");
+                Debug.Log(request.downloadHandler.text);
             }
         }
     }
