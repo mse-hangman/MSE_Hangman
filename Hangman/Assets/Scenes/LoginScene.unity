@@ -766,6 +766,7 @@ GameObject:
   - component: {fileID: 247801651}
   - component: {fileID: 247801650}
   - component: {fileID: 247801654}
+  - component: {fileID: 247801653}
   m_Layer: 5
   m_Name: Sign in
   m_TagString: Untagged
@@ -837,10 +838,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
-        m_Mode: 6
+      - m_Target: {fileID: 247801653}
+        m_TargetAssemblyTypeName: MoveToOtherScene, Assembly-CSharp
+        m_MethodName: MoveToLobby
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -887,6 +888,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247801648}
   m_CullTransparentMesh: 1
+--- !u!114 &247801653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247801648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc155acb06c22548ba2874bc829737c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &247801654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,6 +1320,8 @@ MonoBehaviour:
   User_id: {fileID: 389584811}
   User_password: {fileID: 863239032}
   User_nickname: {fileID: 1208119630}
+  Login_id: {fileID: 0}
+  Login_password: {fileID: 0}
 --- !u!4 &385107050
 Transform:
   m_ObjectHideFlags: 0
