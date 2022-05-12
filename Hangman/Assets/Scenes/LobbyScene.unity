@@ -1492,7 +1492,11 @@ PrefabInstance:
     - target: {fileID: 923370047359869509, guid: 0d9fbe7a5266b67439d8389b8cdf1846, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 697656761}
+      objectReference: {fileID: 563873212209812068, guid: 183b45acd91bb9e4b9b794f7133df1a0, type: 3}
+    - target: {fileID: 923370047359869509, guid: 0d9fbe7a5266b67439d8389b8cdf1846, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 923370047359869509, guid: 0d9fbe7a5266b67439d8389b8cdf1846, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: MoveToWaiting
@@ -1593,7 +1597,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6897270561151341268, guid: 0d9fbe7a5266b67439d8389b8cdf1846, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0d9fbe7a5266b67439d8389b8cdf1846, type: 3}
 --- !u!1 &639549840
 GameObject:
@@ -1771,17 +1776,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5258684960593591333, guid: 0d9fbe7a5266b67439d8389b8cdf1846, type: 3}
   m_PrefabInstance: {fileID: 628627372}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &697656761 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6897270561151341268, guid: 0d9fbe7a5266b67439d8389b8cdf1846, type: 3}
-  m_PrefabInstance: {fileID: 628627372}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fc155acb06c22548ba2874bc829737c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &697957938
 GameObject:
   m_ObjectHideFlags: 0
@@ -4962,7 +4956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 0.392}
+  m_Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

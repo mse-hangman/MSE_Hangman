@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MoveToOtherScene : MonoBehaviour
 {
+    public GameObject Network_manager;
+
     public void MoveToLobby()
     {
         SceneManager.LoadScene("LobbyScene");
@@ -15,6 +17,8 @@ public class MoveToOtherScene : MonoBehaviour
     }
     public void MoveToGame()
     {
+        Network_manager = GameObject.Find("network_manager");
+        Network_manager.gameObject.GetComponent<Network_manager>().GetThreeWord();
         SceneManager.LoadScene("GameScene");
     }
 }

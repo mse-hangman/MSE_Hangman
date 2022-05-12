@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class Game : MonoBehaviour
 {
-    Word word = new Word();
+    Word word;
     string curWord;
     public TextMeshProUGUI txt;
     
@@ -18,8 +18,10 @@ public class Game : MonoBehaviour
 
     private int death_count=1;
 
-    private void Awake()
+    private void Start()
     {
+        word = new Word();
+        word.Setting();
         curWord = word.GetWord();
         Debug.Log(curWord);
         
@@ -33,7 +35,7 @@ public class Game : MonoBehaviour
    public void KeyboardPress(string letter)
     {
         Validation(letter);
-        Debug.Log("Validation  "+letter);
+        Debug.Log("Validation  "+letter+"\n"+ word.curWord.Length);
     }
     private void Validation(string letter)
     {
