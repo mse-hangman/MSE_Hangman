@@ -1,20 +1,17 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - Game
-    - MoveToOtherScene
     - Network_manager
-    - Sign_in
-    - Word
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridPaintingState
+    - UnityEditor.Tilemaps.GridPaletteBrushes
+    - UnityEditor.Tilemaps.GridPalettes
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.SceneViewOpenTilePaletteHelper
     - UnityEditor.Tilemaps.TileDragAndDropManager
@@ -23,158 +20,15 @@ ScriptsOnlyBuild:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
     - TMPro.TMP_FontAsset
-    - TMPro.TMP_InputField
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
-    - TMPro.TextMeshProUGUI
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
-    UnityEngine.UI.dll:
-    - UnityEngine.EventSystems.EventSystem
-    - UnityEngine.EventSystems.StandaloneInputModule
-    - UnityEngine.UI.Button
-    - UnityEngine.UI.CanvasScaler
-    - UnityEngine.UI.Dropdown
-    - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.GridLayoutGroup
-    - UnityEngine.UI.Image
-    - UnityEngine.UI.LayoutElement
-    - UnityEngine.UI.Mask
-    - UnityEngine.UI.RectMask2D
-    - UnityEngine.UI.ScrollRect
-    - UnityEngine.UI.Scrollbar
-    - UnityEngine.UI.Text
-    - UnityEngine.UI.Toggle
-    - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
-    Assets/Scenes/GameScene.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1462}
-    - Class: 114
-      Script: {instanceID: 1782}
-    - Class: 114
-      Script: {instanceID: 2468}
-    - Class: 114
-      Script: {instanceID: 2614}
-    - Class: 114
-      Script: {instanceID: 2656}
-    - Class: 114
-      Script: {instanceID: 2784}
-    - Class: 114
-      Script: {instanceID: 2994}
-    - Class: 114
-      Script: {instanceID: 3096}
-    - Class: 114
-      Script: {instanceID: 4012}
-    - Class: 114
-      Script: {instanceID: 4144}
-    - Class: 114
-      Script: {instanceID: 4980}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/LobbyScene.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1462}
-    - Class: 114
-      Script: {instanceID: 1546}
-    - Class: 114
-      Script: {instanceID: 1624}
-    - Class: 114
-      Script: {instanceID: 1636}
-    - Class: 114
-      Script: {instanceID: 1782}
-    - Class: 114
-      Script: {instanceID: 2098}
-    - Class: 114
-      Script: {instanceID: 2468}
-    - Class: 114
-      Script: {instanceID: 2614}
-    - Class: 114
-      Script: {instanceID: 2656}
-    - Class: 114
-      Script: {instanceID: 2784}
-    - Class: 114
-      Script: {instanceID: 2994}
-    - Class: 114
-      Script: {instanceID: 3002}
-    - Class: 114
-      Script: {instanceID: 3096}
-    - Class: 114
-      Script: {instanceID: 3552}
-    - Class: 114
-      Script: {instanceID: 3788}
-    - Class: 114
-      Script: {instanceID: 3956}
-    - Class: 114
-      Script: {instanceID: 4136}
-    - Class: 114
-      Script: {instanceID: 4214}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 128
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/LoginScene.unity:
+    Assets/Scenes/sockettest.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -194,41 +48,15 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1462}
-    - Class: 114
-      Script: {instanceID: 1546}
-    - Class: 114
-      Script: {instanceID: 1636}
-    - Class: 114
       Script: {instanceID: 1782}
     - Class: 114
       Script: {instanceID: 2090}
     - Class: 114
-      Script: {instanceID: 2468}
+      Script: {instanceID: 4238}
     - Class: 114
-      Script: {instanceID: 2614}
+      Script: {instanceID: 4566}
     - Class: 114
-      Script: {instanceID: 2656}
-    - Class: 114
-      Script: {instanceID: 2784}
-    - Class: 114
-      Script: {instanceID: 2994}
-    - Class: 114
-      Script: {instanceID: 3096}
-    - Class: 114
-      Script: {instanceID: 3430}
-    - Class: 114
-      Script: {instanceID: 3552}
-    - Class: 114
-      Script: {instanceID: 3952}
-    - Class: 114
-      Script: {instanceID: 4214}
-    - Class: 114
-      Script: {instanceID: 4234}
-    - Class: 114
-      Script: {instanceID: 4562}
-    - Class: 114
-      Script: {instanceID: 4986}
+      Script: {instanceID: 4992}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -236,63 +64,6 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
-      Script: {instanceID: 0}
-    Assets/Scenes/WaitingRoomScene.unity:
-    - Class: 1
-      Script: {instanceID: 0}
-    - Class: 4
-      Script: {instanceID: 0}
-    - Class: 20
-      Script: {instanceID: 0}
-    - Class: 21
-      Script: {instanceID: 0}
-    - Class: 28
-      Script: {instanceID: 0}
-    - Class: 48
-      Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
-    - Class: 104
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 1462}
-    - Class: 114
-      Script: {instanceID: 1782}
-    - Class: 114
-      Script: {instanceID: 2468}
-    - Class: 114
-      Script: {instanceID: 2614}
-    - Class: 114
-      Script: {instanceID: 2656}
-    - Class: 114
-      Script: {instanceID: 2784}
-    - Class: 114
-      Script: {instanceID: 2994}
-    - Class: 114
-      Script: {instanceID: 3096}
-    - Class: 114
-      Script: {instanceID: 3552}
-    - Class: 115
-      Script: {instanceID: 0}
-    - Class: 157
-      Script: {instanceID: 0}
-    - Class: 196
-      Script: {instanceID: 0}
-    - Class: 213
-      Script: {instanceID: 0}
-    - Class: 222
-      Script: {instanceID: 0}
-    - Class: 223
-      Script: {instanceID: 0}
-    - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -469,6 +240,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
+  - hash:
+      serializedVersion: 2
+      Hash: a3a6d8f7de52da210be177fdcb5ef669
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ui_manager
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -687,10 +464,10 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
-      Hash: e5746322852e3a854c29b2f747e2b153
+      Hash: 21a70e8d10fc1429bc25283f747c558d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Sign_in
+    className: log_in
   - hash:
       serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
@@ -705,7 +482,7 @@ ScriptsOnlyBuild:
     className: SpriteShapeGeometryCache
   - hash:
       serializedVersion: 2
-      Hash: 1a9fbff7cc859f8d0db8f5d5943b2656
+      Hash: ab03240f3342f7807d8fa166c694329d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Word
@@ -741,10 +518,16 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: 9cca365f954613a5eeb354ed92ce5c62
+      Hash: 6a58bdb31602e6eb1d2ab94ef375be75
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: Game
+    className: gamemanager
+  - hash:
+      serializedVersion: 2
+      Hash: fe5b65f2c493de146468c00400dcac14
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: hangman_manager
   - hash:
       serializedVersion: 2
       Hash: 18c222bef9ae745ce69ddde9b74337ca
@@ -825,7 +608,7 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: e94d4eb9e7d37bb4f8a12cfc4a1e1848
+      Hash: 6480a24980ab7480b1da548c71eed177
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Network_manager
@@ -843,8 +626,5 @@ ScriptsOnlyBuild:
     className: FabrikSolver2D
   platform: 5
   scenePathNames:
-  - Assets/Scenes/LoginScene.unity
-  - Assets/Scenes/LobbyScene.unity
-  - Assets/Scenes/WaitingRoomScene.unity
-  - Assets/Scenes/GameScene.unity
-  playerPath: D:/MSEProject/Builds/Hangman.exe
+  - Assets/Scenes/sockettest.unity
+  playerPath: "C:/Users/AMEN/\uB2E4\uC6B4\uB85C\uB4DC/build123/Hangman.exe"

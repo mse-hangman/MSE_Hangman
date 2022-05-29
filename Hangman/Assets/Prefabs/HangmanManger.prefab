@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8320688391724577079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8320688391724577065}
+  - component: {fileID: 8320688391724577064}
+  m_Layer: 0
+  m_Name: HangmanManger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8320688391724577065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8320688391724577079}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 442.25586, y: -818.66583, z: 0.00000047683716}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8320688391724577064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8320688391724577079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312bcee1e8ee4f84593626bff2f4880e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txt: {fileID: 0}
+  sp:
+  - {fileID: -3433004112325352858, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: 8050314860398698374, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: -8526973491047777431, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: -6989286412032567063, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: 4193022907666426858, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: -2769312818548760646, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: 421796205993150673, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: 9062882621738836471, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: -6871203956967037575, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  - {fileID: -1051144857600194509, guid: 9e5eeba9b9da887449c8557e5b58144e, type: 3}
+  dice:
+  - {fileID: -2205863333093305225, guid: e80c43007ffcc2949b38f914741cd6ed, type: 3}
+  - {fileID: -5420220854288092238, guid: e80c43007ffcc2949b38f914741cd6ed, type: 3}
+  - {fileID: 1094064525842813209, guid: e80c43007ffcc2949b38f914741cd6ed, type: 3}
+  - {fileID: 7934114944782325874, guid: e80c43007ffcc2949b38f914741cd6ed, type: 3}
+  - {fileID: -880043905950401250, guid: e80c43007ffcc2949b38f914741cd6ed, type: 3}
+  - {fileID: -5478230469006044976, guid: e80c43007ffcc2949b38f914741cd6ed, type: 3}
+  MyDiceani: {fileID: 0}
+  OtherDiceani: {fileID: 0}
+  character: {fileID: 0}
+  resultPanel: {fileID: 0}
+  answerPanel: {fileID: 0}
