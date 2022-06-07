@@ -9,7 +9,16 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using WebSocketSharp;
 
-
+[Serializable]
+public class MakeRoomMessage
+{
+  int statusCode;
+  string result;
+    public string get_result()
+    {
+        return result;
+    }
+}
 
 
 public class MemberData : LoginData
@@ -31,22 +40,33 @@ public class requestFormat
     public string type;
     public int gameroomId;
 }
+public class startFormat : requestFormat
+{
+    public string userId;
+}
 public class emojiFormat
 {
     public string type="EMOJI";
+    public int gameroomId;
     public int emoji;
 }
 public class DiceFormat
 {
     public string type = "TURN";
-    public int gameroodId;
+    public int gameroomId;
     public int diceNumber;
 }
 public class WordFormat
 {
     public string type = "WORD";
-    public int gameroodId;
+    public int gameroomId;
     public string wordForCounterpart;
+}
+public class PlayFormat
+{
+    public string type = "PLAY";
+    public int gameroomId;
+    public bool isCorrect;
 }
 public class Room
 {
@@ -54,6 +74,7 @@ public class Room
     public int wordCount;
     public string gameCharacter;
 }
+
 
 public class Network_manager : MonoBehaviour
 {
@@ -68,14 +89,15 @@ public class Network_manager : MonoBehaviour
     public GameObject Pop_up;
     private MemberData data;
     private LoginData login_data;
+    public emojiFormat Emoji;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
         data = new MemberData();
         login_data = new LoginData();
-
-        // ws://3.35.3.123:8080/gameroom/{gameroom}
+        Emoji = new emojiFormat();
+        // ws://13.125.205.198:8080/gameroom/{gameroom}
     }
     public IEnumerator LoginData(string User_id, string User_password, Action<string> callback)
     {
@@ -83,7 +105,7 @@ public class Network_manager : MonoBehaviour
         login_data.user_id = User_id;
         login_data.user_pw = User_password;
         string json = JsonUtility.ToJson(login_data);
-        StartCoroutine(Upload("http://3.35.3.123:8080/log-in", json, (request) => {
+        StartCoroutine(Upload("http://13.125.205.198:8080/log-in", json, (request) => {
             Debug.Log(Message);
             callback(Message);
         }));
@@ -97,7 +119,7 @@ public class Network_manager : MonoBehaviour
         data.user_nickname = User_nickname;
         data.user_pw = User_password;
         string json = JsonUtility.ToJson(data);
-        StartCoroutine(Upload("http://3.35.3.123:8080/sign-up", json, (request) => {
+        StartCoroutine(Upload("http://13.125.205.198:8080/sign-up", json, (request) => {
             Debug.Log(Message);
             callback(Message);
         }));
@@ -107,7 +129,7 @@ public class Network_manager : MonoBehaviour
     {
         data.user_id = User_id;
         string json = JsonUtility.ToJson(data);
-        StartCoroutine(Upload("http://3.35.3.123:8080/checkID", json, (request) => {
+        StartCoroutine(Upload("http://13.125.205.198:8080/checkID", json, (request) => {
             if (Message == "Valid ID")
                 id_check = true;
             Debug.Log(id_check);
@@ -120,7 +142,7 @@ public class Network_manager : MonoBehaviour
     {
         data.user_nickname = User_nickname;
         string json = JsonUtility.ToJson(data);
-        StartCoroutine(Upload("http://3.35.3.123:8080/checkNN", json, (request) => {
+        StartCoroutine(Upload("http://13.125.205.198:8080/checkNN", json, (request) => {
             if (Message == "Valid Nickname")
                 nickname_check = true;
             Debug.Log(nickname_check);
@@ -136,9 +158,9 @@ public class Network_manager : MonoBehaviour
         new_room.gameCharacter = gameCharacter;
         string json = JsonUtility.ToJson(new_room);
         Debug.Log(json);
-        StartCoroutine(Upload("http://3.35.3.123:8080/gameroom", json, (request) => {
-            Debug.Log(Message);
+        StartCoroutine(Upload("http://13.125.205.198:8080/gameroom", json, (request) => {
            // RoomId = int.Parse(Message);
+
             callback(Message);
         }));
         yield return null;
@@ -156,7 +178,15 @@ public class Network_manager : MonoBehaviour
     }
     public IEnumerator GetThreeWord(int wordcount,Action<string> callback)
     {
-        StartCoroutine(Download("http://3.35.3.123:8080/word/random?wordCount="+wordcount, (request) => {
+        StartCoroutine(Download("http://13.125.205.198:8080/word/random?wordCount="+wordcount, (request) => {
+            Debug.Log(Downloaddata);
+            callback(Downloaddata);
+        }));
+        yield return 0;
+    }
+    public IEnumerator GetRoomList(Action<string> callback)
+    {
+        StartCoroutine(Download("http://13.125.205.198:8080/gameroom", (request) => {
             Debug.Log(Downloaddata);
             callback(Downloaddata);
         }));
@@ -217,14 +247,14 @@ public class Network_manager : MonoBehaviour
             if (Socket == null || !Socket.IsAlive)
                 try
                 {
-                    // ws://3.35.3.123:8080/gameroom/{gameroom}
-                    Socket = new WebSocketSharp.WebSocket("ws://3.35.3.123:8080/gameroom/" + SERVICE_NAME);
-
+                    // ws://13.125.205.198:8080/gameroom/{gameroom}
+                    Socket = new WebSocketSharp.WebSocket("ws://13.125.205.198:8080/gameroom/" + SERVICE_NAME);
                     Socket.OnMessage += Recv;
                     Socket.OnClose += CloseeConnect;
+                    RoomId = int.Parse(SERVICE_NAME);
                 }
                 catch { }
-            Socket.Connect();
+            Socket.ConnectAsync();
             SendSocketMessage("CHECK", RoomId);
         }
         catch (Exception e)
@@ -232,38 +262,8 @@ public class Network_manager : MonoBehaviour
             Debug.Log(e.ToString());
         }
     }
-    public void GameStart()
-    {
-        try
-        {
-            if (Socket == null || !Socket.IsAlive)
-                try
-                {
-                    // ws://3.35.3.123:8080/gameroom/{gameroom}
-                    Socket = new WebSocketSharp.WebSocket("ws://3.35.3.123:8080/gameroom/" + RoomId);
-
-                    Socket.OnMessage += Recv;
-                    Socket.OnClose += CloseeConnect;
-                }
-                catch { }
-            Socket.Connect();
-            SendSocketMessage("CHECK", 1);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.ToString());
-        }
-    }
-
-    public void Recv(object sender, MessageEventArgs e)
-    {
-        Debug.Log(e.Data);
-
-        Debug.Log(e.RawData);
-    }
     public void CloseeConnect(object sender, CloseEventArgs e)
     {
-        Debug.Log("bad");
         Debug.Log(e.Reason);
         DisconnectServer();
     }
@@ -286,61 +286,60 @@ public class Network_manager : MonoBehaviour
         requestFormat format = new requestFormat();
         format.gameroomId = gameroomId;
         format.type = type;
+        
         string json = JsonUtility.ToJson(format);
         Debug.Log(json);
-        if (!Socket.IsAlive)
-            return;
-        try
-        {
-            Socket.Send(json);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        SendJsonSocket(json);
     }
     public void SendEmojiMessage(int emoji)
     {
         emojiFormat format = new emojiFormat();
         format.emoji = emoji;
+        format.gameroomId = RoomId;
         string json = JsonUtility.ToJson(format);
         Debug.Log(json);
-        if (!Socket.IsAlive)
-            return;
-        try
-        {
-            Socket.Send(json);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        SendJsonSocket(json);
     }
     public void SendDiceMessage(int Dice)
     {
         DiceFormat format = new DiceFormat();
         format.diceNumber = Dice;
-        format.gameroodId = RoomId;
+        format.gameroomId = RoomId;
         string json = JsonUtility.ToJson(format);
         Debug.Log(json);
-        if (!Socket.IsAlive)
-            return;
-        try
-        {
-            Socket.Send(json);
-        }
-        catch (Exception)
-        {
-            throw;
-        }
+        SendJsonSocket(json);
     }
     public void SendWordMessage(string word)
     {
         WordFormat format = new WordFormat();
         format.wordForCounterpart = word;
-        format.gameroodId = RoomId;
+        format.gameroomId = RoomId;
         string json = JsonUtility.ToJson(format);
         Debug.Log(json);
+        SendJsonSocket(json);
+    }
+    public void SendPlayMessage(bool message)
+    {
+        PlayFormat format = new PlayFormat();
+        format.gameroomId = RoomId;
+        format.isCorrect = message;
+
+        string json = JsonUtility.ToJson(format);
+        Debug.Log(json);
+        SendJsonSocket(json);
+    }
+    public void SendStartMessage()
+    {
+        startFormat format = new startFormat();
+        format.type = "START";
+        format.gameroomId = RoomId;
+        format.userId = login_data.user_id;
+        string json = JsonUtility.ToJson(format);
+        Debug.Log(json);
+        SendJsonSocket(json);
+    }
+    public void SendJsonSocket(string json)
+    {
         if (!Socket.IsAlive)
             return;
         try
@@ -356,6 +355,40 @@ public class Network_manager : MonoBehaviour
     {
         return Downloaddata;
     }
+    public void Recv(object sender, MessageEventArgs e)
+    {
+        Debug.Log(e.Data);
+        Debug.Log("NOPE");//보내는거랑 받는거랑 같이 할때 에러 발생
+        Debug.Log(e.RawData);
+        
+        if (e.Data.Contains("EMOJI"))
+        {
+            Emoji = JsonUtility.FromJson<emojiFormat>(e.Data);
+            StartCoroutine(GameObject.Find("EmojiManager").GetComponent<Emoji_Manger>().OtherPlayerEmoji(Emoji.emoji));
+        }
+        if (e.Data== "Players are ready. Choose the word!")
+        {
+
+        }
+        if (e.Data == "Word matching is finished!")
+        {
+            SendDiceMessage(GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().DiceStart());
+        }
+        if (e.Data == data.user_id+" goes first")
+        {
+            Debug.Log("RIGHT");
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("my");
+        }
+        else if (e.Data.Contains(" goes first"))
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("other");
+        }
+        if (e.Data == "DRAW. Roll the dice again")
+        {
+            SendDiceMessage(GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().DiceStart());
+        }
+    }
+
 }
 
 

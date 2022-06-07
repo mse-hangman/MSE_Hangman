@@ -17,7 +17,6 @@ public class TurnTimer : MonoBehaviour
         timerSlider.maxValue = gameTime;
         timerSlider.value = gameTime;
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -29,20 +28,29 @@ public class TurnTimer : MonoBehaviour
 
         if(time <= 0)
         {
-            stopTimer = true;
-            if(turnText.text=="My Turn")
-            {
-                turnText.text = "Other Player Turn";
-            }
-            else if (turnText.text == "Other Player Turn")
-            {
-                turnText.text = "My Turn";
-            }
+            ///ChangeStopTimer(true,"other");//Turn 넘겨주는거
+            //GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("other");
+            Destroy(gameObject);
         }
         if(stopTimer == false)
         {
             timerText.text = textTime;
             timerSlider.value = time;
         }
+    }
+    public void Turnchange (string start_player)
+    {
+        if (start_player == "other")
+        {
+            turnText.text = "Other Player Turn";
+        }
+        else if (start_player == "my")
+        {
+            turnText.text = "My Turn";
+        }
+    }
+    public bool GetStopTimer()
+    {
+        return stopTimer;
     }
 }

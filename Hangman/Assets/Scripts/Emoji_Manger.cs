@@ -7,8 +7,10 @@ public class Emoji_Manger : MonoBehaviour
 {
     public GameObject[] Emoji = new GameObject[4];
     public GameObject nowEmoji;
+    public GameObject other_nowEmoji;
     public bool Emojicheck = true;
     public GameObject EmojiPositon;
+    public GameObject other_EmojiPositon;
 
     public IEnumerator MakeEmoji(int index)
     {
@@ -25,7 +27,6 @@ public class Emoji_Manger : MonoBehaviour
     {
         if (Emojicheck)
         {
-            Debug.Log("isworking");
             StartCoroutine(MakeEmoji(index));
         }
         else
@@ -33,5 +34,14 @@ public class Emoji_Manger : MonoBehaviour
 
         }
     }
-
+    public IEnumerator OtherPlayerEmoji(int index)
+    {
+        other_nowEmoji = Instantiate(Emoji[index], other_EmojiPositon.GetComponent<RectTransform>());
+        other_nowEmoji.transform.parent = this.transform;
+        Emojicheck = false;
+        yield return new WaitForSeconds(10);
+        Emojicheck = true;
+        Destroy(other_nowEmoji);
+        yield return 0;
+    }
 }

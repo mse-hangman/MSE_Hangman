@@ -18,12 +18,10 @@ public class  Word : MonoBehaviour
         ThreeWord threeword=new ThreeWord();
         threeword = JsonUtility.FromJson<ThreeWord>(words);
         word = threeword.result;
-        Debug.Log(word[0]);
     }
     public string GetWord(int index)
     {
         curWord = word[index].ToUpper();
-        Debug.Log(curWord);
         return curWord;
     }
 

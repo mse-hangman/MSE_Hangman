@@ -987,7 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fc155acb06c22548ba2874bc829737c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
   SceneName: 
 --- !u!1 &284068112
 GameObject:
@@ -7754,5 +7753,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManger
       objectReference: {fileID: 0}
+    - target: {fileID: 7392274013802456043, guid: 2440e3d4254990b40afd98449f698486,
+        type: 3}
+      propertyPath: waiting_manager
+      value: 
+      objectReference: {fileID: 7696401521618480171, guid: 362ed13235059a94eb4ee628201cc254,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2440e3d4254990b40afd98449f698486, type: 3}

@@ -11,6 +11,8 @@ public class ui_manager : MonoBehaviour
 
     public Button makeroombutton;
 
+    public Button[] HangmanButton = new Button[26];
+
     public GameObject Popup;
     public TextMeshProUGUI Popup_text;
 
@@ -55,9 +57,8 @@ public class ui_manager : MonoBehaviour
             Signup();
         });
     }
-    public IEnumerator MakeRoom()
+    public void MakeRoom()
     {
-        yield return new WaitForSeconds(0.5f);
         makeroombutton = GameObject.Find("MakeRoom Button").GetComponent<Button>();
         makeroombutton.onClick.AddListener(() =>
         {
@@ -66,7 +67,9 @@ public class ui_manager : MonoBehaviour
         MakeRoom_title = GameObject.Find("RoomTitle").GetComponent<TMP_InputField>();
         MakeRoom_wordcount = GameObject.Find("WordCount").GetComponent<TextMeshProUGUI>();
         MakeRoom_Graphic = GameObject.Find("CharacterDropdown").GetComponent<Dropdown>();
+        GameObject.Find("MakeRoomPanel").SetActive(false);
     }
+
     public void StartGame()
     {
         makeroombutton = GameObject.Find("GameStart Button").GetComponent<Button>();
@@ -152,6 +155,165 @@ public class ui_manager : MonoBehaviour
         thirdword.onClick.AddListener(() =>
         {
             GameObject.Find("GameManger").GetComponent<gamemanager>().select_word(2);
+        });
+    }
+    public void HangmanButtonSet()
+    {
+        int count = 0;
+        HangmanButton[count] = GameObject.Find("A").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("A");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("B").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("B");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("C").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("C");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("D").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("D");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("E").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("E");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("F").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("F");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("G").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("G");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("H").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("H");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("I").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("I");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("J").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("J");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("K").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("K");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("L").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("L");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("M").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("M");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("N").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("N");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("O").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("O");
+        });
+        count++; 
+        HangmanButton[count] = GameObject.Find("P").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("P");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("Q").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("Q");
+        });
+        count++; 
+        HangmanButton[count] = GameObject.Find("R").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("R");
+        });
+        count++; 
+        HangmanButton[count] = GameObject.Find("S").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("S");
+        });
+        count++; 
+        HangmanButton[count] = GameObject.Find("T").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("T");
+        });
+        count++; 
+        HangmanButton[count] = GameObject.Find("U").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("U");
+        });
+        count++; 
+        HangmanButton[count] = GameObject.Find("V").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("V");
+        });
+        count++; 
+        HangmanButton[count] = GameObject.Find("W").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("W");
+        }); 
+        count++;
+        HangmanButton[count] = GameObject.Find("X").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("X");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("Y").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("Y");
+        });
+        count++;
+        HangmanButton[count] = GameObject.Find("Z").GetComponent<Button>();
+        HangmanButton[count].onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().KeyboardPress("Z");
         });
     }
 }
