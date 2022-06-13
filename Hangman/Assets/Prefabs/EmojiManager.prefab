@@ -910,13 +910,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Emoji:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7186927304115482720, guid: 7c9aa62218308544aa7d40ee8fe70d28, type: 3}
+  - {fileID: 7186927304115482720, guid: bbd17fb1925a90142a2cbe91b00646d7, type: 3}
+  - {fileID: 7186927304115482720, guid: 86dfcd8b221df3f429200d532038ee8b, type: 3}
   - {fileID: 7186927304115482720, guid: 4564b8d1debe5ac4a9e87624d6d7231d, type: 3}
   nowEmoji: {fileID: 0}
+  other_nowEmoji: {fileID: 0}
   Emojicheck: 1
   EmojiPositon: {fileID: 4278077225203733505}
+  other_EmojiPositon: {fileID: 6501226984327194622}
 --- !u!1 &4278077224393377646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,7 +1374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -839, y: 0}
+  m_AnchoredPosition: {x: -1061, y: -61}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6501226984327194622
@@ -1407,6 +1409,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -566, y: 0}
+  m_AnchoredPosition: {x: -704, y: -62}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

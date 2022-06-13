@@ -9,7 +9,12 @@ public class ui_manager : MonoBehaviour
     public Button secondword;
     public Button thirdword;
 
+    public Button Refresh_Btn;
     public Button makeroombutton;
+
+    public Button hintbutton;
+
+    public Button answerbutton;
 
     public Button[] HangmanButton = new Button[26];
 
@@ -36,6 +41,23 @@ public class ui_manager : MonoBehaviour
         getter = new List<string>();
         Login_id = GameObject.Find("login_id_input").GetComponent<TMP_InputField>();
         Login_password = GameObject.Find("login_password_input").GetComponent<TMP_InputField>();
+    }
+    public void Hint()
+    {
+        hintbutton = GameObject.Find("HintBtn").GetComponent<Button>();
+        answerbutton = GameObject.Find("Enter_btn").GetComponent<Button>();
+        GameObject.Find("AnswerPanel").gameObject.SetActive(false);
+        hintbutton.onClick.AddListener(() =>
+        {
+            hintbutton.interactable = false;
+            Debug.Log("yes");
+            string message= "The word contains a(an) " + GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().UseHint();
+            GameObject.Find("HintText").GetComponent<TextMeshProUGUI>().text = message;
+        });
+        answerbutton.onClick.AddListener(() =>
+        {
+            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().Direct_Verification(GameObject.Find("AnswerInputField").GetComponent<TMP_InputField>().text);
+        });
     }
 
     public void Signup()
@@ -67,6 +89,11 @@ public class ui_manager : MonoBehaviour
         MakeRoom_title = GameObject.Find("RoomTitle").GetComponent<TMP_InputField>();
         MakeRoom_wordcount = GameObject.Find("WordCount").GetComponent<TextMeshProUGUI>();
         MakeRoom_Graphic = GameObject.Find("CharacterDropdown").GetComponent<Dropdown>();
+        Refresh_Btn = GameObject.Find("Refresh_Btn").GetComponent<Button>();
+        Refresh_Btn.onClick.AddListener(() =>
+        {
+            GameObject.Find("GameManger").GetComponent<gamemanager>().get_roomlist();
+        });
         GameObject.Find("MakeRoomPanel").SetActive(false);
     }
 

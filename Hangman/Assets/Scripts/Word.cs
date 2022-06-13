@@ -6,7 +6,6 @@ public class ThreeWord//
 {
     public int statusCod;
     public List<string> result=new List<string>();
-    
 }
 
 public class  Word : MonoBehaviour

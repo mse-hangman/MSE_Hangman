@@ -7,11 +7,13 @@ public class hangman_manager : MonoBehaviour
 {
     public Word word;
     string curWord;
+    List<char> hintWord = new List<char>();
     public TextMeshProUGUI txt;
     public GameObject NotMyTurn;
     public GameObject NotMyTurn_instance;
 
     private string reponse;
+    private string mean;
     private bool win = false;
     public Sprite[] now_sprites;
     public Sprite[] lion;
@@ -34,21 +36,35 @@ public class hangman_manager : MonoBehaviour
 
     public GameObject resultPanel;
     public GameObject answerPanel;
+    public GameObject SelectWordPanel;
 
     private int death_count=1;
     private int otherplayer_death_count = 1;
     private void Awake()
     {
-        MyDiceani = GameObject.Find("MyDice");
         Mycharacter = GameObject.Find("MyCharacter");//instance·Î ¹Ù²ã¾ß ÇÔ
         Enemycharacter = GameObject.Find("EnemyCharacter");//instance·Î ¹Ù²ã¾ß ÇÔ
         resultPanel = GameObject.Find("GameresultPanel");
         resultPanel.gameObject.SetActive(false);
         answerPanel = GameObject.Find("AnswerPanel");
-        answerPanel.gameObject.SetActive(false);
         word = GameObject.Find("HangmanWord").GetComponent<Word>();
+        SelectWordPanel = GameObject.Find("SelectWordPanel");
+        SelectWordPanel.gameObject.SetActive(false);
+        resultPanel.gameObject.SetActive(false);
         txt = word.GetComponent<TextMeshProUGUI>();
-        TurnStart("other");//testcode
+    }
+    public void get_word(string Character,int Count)
+    {
+        string threeword;
+        Destroy(GameObject.Find("WaitPanel"));
+        SetCharacter(Character);
+        SelectWordPanel.gameObject.SetActive(true);
+        StartCoroutine(GameObject.Find("network_manager(Clone)").GetComponent<Network_manager>().GetThreeWord(Count, (Message) => {
+            threeword = Message;
+            Debug.Log(threeword);
+            GetWord(threeword);
+            GameObject.Find("ui_manager(Clone)").GetComponent<ui_manager>().ThreeWordButton();
+        }));
     }
     public void SetCharacter(string character)
     {
@@ -83,14 +99,29 @@ public class hangman_manager : MonoBehaviour
         txt.text = reponse;
         reponse = null;
     }
-    public void SelectWord(int index)
+    public void SelectWord(string selectedword)
     {
-        curWord = word.GetWord(index);
-        Debug.Log(curWord);
+        word.curWord = selectedword.ToUpper();
+        curWord = word.curWord;
+        StartCoroutine(GameObject.Find("network_manager(Clone)").GetComponent<Network_manager>().GetMean(curWord, (Message) =>
+         {
+             MakeRoomMessage mean_temp;
+             mean_temp = JsonUtility.FromJson<MakeRoomMessage>(Message);
+             mean = mean_temp.result;
+             Debug.Log("Word Mean :" + mean);
+         }));
+        var arr = curWord.ToCharArray();
+        for(int i = 0; i < curWord.Length; i++)
+        {
+            hintWord.Add(arr[i]);
+        }
+        Debug.Log("now Word :"+word.curWord);
+        
         for (int i = 0; i < word.curWord.Length; i++)
         {
             reponse += "_";
         }
+        Debug.Log(reponse);
         txt.text = reponse;
     }
     public int DiceStart()
@@ -99,6 +130,12 @@ public class hangman_manager : MonoBehaviour
         int Result = Random.Range(0, 5);
         StartCoroutine(RollTheDice(MyDiceani.GetComponent<Image>(), Result));
         return Result+1;
+    }
+    public void OtherDiceStart(int Result)
+    {
+        Debug.Log("otherdice:" + Result);
+        OtherDiceani = GameObject.Find("OtherDice");
+        StartCoroutine(RollTheDice(OtherDiceani.GetComponent<Image>(), Result-1));
     }
     public IEnumerator RollTheDice(Image rend, int result)
     {
@@ -114,6 +151,11 @@ public class hangman_manager : MonoBehaviour
         finalSide = result+1;
         Debug.Log(finalSide);
     }
+    public IEnumerator closedicepanel()
+    {
+        yield return new WaitForSeconds(4f);
+        GameObject.Find("DicePanel").SetActive(false);
+    }
     public void TurnStart(string turn)
     {
         Debug.Log(turn);
@@ -127,33 +169,37 @@ public class hangman_manager : MonoBehaviour
         if(turn == "my")
         {
             Destroy(GaurdPanel_Instance);
+            Destroy(NotMyTurn_instance);
         }
 
     }
     public void OtherDeathcount()
     {
-        otherplayer_death_count--;
+        otherplayer_death_count++;
     }
     public void KeyboardPress(string letter)
     {
         GameObject.Find("network_manager(Clone)").GetComponent<Network_manager>().SendPlayMessage(Validation(letter));
+        TurnStart("other");
         Debug.Log("Validation  "+letter+"\n"+ word.curWord.Length);
     }
     private bool Validation(string letter)
     {
+        letter = letter.ToUpper();
         reponse = "";
         win = false;
-
+        bool check=false;
         for(int i = 0; i < word.curWord.Length; i++)
         {
-            
             if (txt.text.Substring(i, 1) == "_")
             {
                 if (word.curWord.Substring(i, 1) == letter)
                 {
+                    hintWord.RemoveAt(hintWord.IndexOf(char.Parse(letter)));
                     reponse += letter;
                     win = true;
-                    return true;
+                    check = true;
+                    GameObject.Find("AudioManager(Clone)").GetComponent<AudioManager>().PlaySFXSound("GoodWork");
                 }
                 else
                 {
@@ -164,10 +210,19 @@ public class hangman_manager : MonoBehaviour
             {
                 reponse += txt.text.Substring(i, 1);
             }
+            
+        }
+        if (win == false)
+        {
+            GameObject.Find("AudioManager(Clone)").GetComponent<AudioManager>().PlaySFXSound("No");
         }
         txt.text = reponse;
         Verification();
-        return false;
+        return check;
+    }
+    public char UseHint()
+    {
+        return hintWord[0];
     }
     void Verification()
     {
@@ -189,33 +244,60 @@ public class hangman_manager : MonoBehaviour
 
         }
     }
-    public void SetActiveAnswer()
+    public void Direct_Verification(string answer)
     {
-        answerPanel.SetActive(true);
-    }
-    public void Direct_Verification()
-    {
-        if (curWord == answerPanel.GetComponentInChildren<TMP_InputField>().text)
-        {
-            GameResult(true);
-        }
+        answer = answer.ToUpper();
+        if (answer==word.curWord)
+         {
+             GameResult(true);
+         }
         else
         {
             GameResult(false);
         }
     }
+    public void OtherVerification(int result)
+    {
+        if (result == -1)
+        {
+            OtherDeathcount();
+            if (otherplayer_death_count == 10)
+            {
+                //GameObject.Find("network_manager(Clone)").GetComponent<Network_manager>().SendResultMessage(Validation(letter));
+                GameResult(true);
+            }
+            else
+            {
+                Enemycharacter.GetComponent<Image>().sprite = now_sprites[otherplayer_death_count];
+                TurnStart("my");
+            }
+        }
+        else if (result == 1)
+        {
+            TurnStart("my");
+        }
+    }
+    public void SetActiveAnswer()
+    {
+        answerPanel.SetActive(true);
+    }
     public void GameResult(bool check)
     {
-        if (check == true) {
+        Destroy(NotMyTurn_instance);
+        if (check == true&& resultPanel.activeInHierarchy ==false) {
             answerPanel.SetActive(false);
             resultPanel.SetActive(true);
-            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Win";
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Win Your Word is "+word.curWord+System.Environment.NewLine+"mean:"+mean;
+            GameObject.Find("network_manager(Clone)").GetComponent<Network_manager>().SendGameResultMessage(true);
+            GameObject.Find("AudioManager(Clone)").GetComponent<AudioManager>().PlaySFXSound("YouWin");
         }
-        else if(check == false)
+        else if(check == false&&resultPanel.activeInHierarchy == false)
         {
             answerPanel.SetActive(false);
             resultPanel.SetActive(true);
-            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Lose";
+            resultPanel.GetComponentInChildren<TextMeshProUGUI>().text = "You Lose Your Word is " + word.curWord + System.Environment.NewLine + "mean:" + mean;
+            GameObject.Find("network_manager(Clone)").GetComponent<Network_manager>().SendGameResultMessage(false);
+            GameObject.Find("AudioManager(Clone)").GetComponent<AudioManager>().PlaySFXSound("YouLose");
         }
     }
 }

@@ -696,7 +696,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -76.00001, y: -132}
+  m_AnchoredPosition: {x: -142.30005, y: -176.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &132263057
@@ -865,7 +865,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 355, y: -205}
+  m_AnchoredPosition: {x: 288.69995, y: -249.4}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &247801650
@@ -2010,7 +2010,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -160}
+  m_AnchoredPosition: {x: 1004, y: -160}
   m_SizeDelta: {x: 1000, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &513925833
@@ -5396,7 +5396,7 @@ GameObject:
   - component: {fileID: 1569611192}
   - component: {fileID: 1569611191}
   m_Layer: 5
-  m_Name: teddybear
+  m_Name: cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5409,16 +5409,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569611189}
-  m_LocalRotation: {x: 0, y: 0, z: -0.17364825, w: 0.9848078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1586348214}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75, y: 90}
+  m_AnchoredPosition: {x: 42, y: 79}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569611191
@@ -5441,7 +5441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 537913cd58ecb0e4bb082bd85194d536, type: 3}
+  m_Sprite: {fileID: -19866503354455041, guid: 703f7f29cf8a07449b83a5058a4ec360, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7589,7 +7589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 78.3, y: -372.6}
+  m_AnchoredPosition: {x: 12, y: -417}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2142710973
@@ -7755,9 +7755,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7392274013802456043, guid: 2440e3d4254990b40afd98449f698486,
         type: 3}
+      propertyPath: AudioManager
+      value: 
+      objectReference: {fileID: 3723080392710137903, guid: 86a0ac82a96c7ed4fae649c6632c3b7a,
+        type: 3}
+    - target: {fileID: 7392274013802456043, guid: 2440e3d4254990b40afd98449f698486,
+        type: 3}
       propertyPath: waiting_manager
       value: 
       objectReference: {fileID: 7696401521618480171, guid: 362ed13235059a94eb4ee628201cc254,
+        type: 3}
+    - target: {fileID: 7392274013802456043, guid: 2440e3d4254990b40afd98449f698486,
+        type: 3}
+      propertyPath: hangman_manager_original
+      value: 
+      objectReference: {fileID: 8320688391724577079, guid: 3650c43d5b62bc0448d91ac879f9e259,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2440e3d4254990b40afd98449f698486, type: 3}

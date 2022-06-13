@@ -7,17 +7,15 @@ using System.Net;
 using System.IO;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using System.Collections.Concurrent;
 using WebSocketSharp;
+using System.Text.RegularExpressions;
 
 [Serializable]
 public class MakeRoomMessage
 {
-  int statusCode;
-  string result;
-    public string get_result()
-    {
-        return result;
-    }
+ public int statusCode;
+ public  string result;
 }
 
 
@@ -75,13 +73,17 @@ public class Room
     public string gameCharacter;
 }
 
-
+public class resultFormat : requestFormat
+{
+    public string winner;
+}
 public class Network_manager : MonoBehaviour
 {
     public string Url;
     public string Message;
     private string Downloaddata;
-    private bool nickname_check = false, id_check = false;
+    private bool nickname_check = false, id_check = false,socketsend=true;
+    private readonly ConcurrentQueue<Action> _actions = new ConcurrentQueue<Action>();
     public int RoomId;
 
     public WebSocketSharp.WebSocket Socket = null;
@@ -90,6 +92,7 @@ public class Network_manager : MonoBehaviour
     private MemberData data;
     private LoginData login_data;
     public emojiFormat Emoji;
+    public WordFormat Word;
 
     private void Start()
     {
@@ -184,6 +187,15 @@ public class Network_manager : MonoBehaviour
         }));
         yield return 0;
     }
+    public IEnumerator GetRankingList(Action<string> callback)
+    {
+        StartCoroutine(Download("http://13.125.205.198:8080/score", (request) => {
+            Debug.Log(Downloaddata);
+            callback(Downloaddata);
+        }));
+        yield return 0;
+    }
+    
     public IEnumerator GetRoomList(Action<string> callback)
     {
         StartCoroutine(Download("http://13.125.205.198:8080/gameroom", (request) => {
@@ -192,7 +204,16 @@ public class Network_manager : MonoBehaviour
         }));
         yield return 0;
     }
-
+    // "http://13.125.205.198:8080/word/definition?word="+curWord
+    public IEnumerator GetMean(string curWord ,Action<string> callback)
+    {
+        StartCoroutine(Download("http://13.125.205.198:8080/word/definition?word=" + curWord, (request) => {
+            //역직열화 필요
+            Debug.Log(Downloaddata);
+            callback(Downloaddata);
+        }));
+        yield return 0;
+    }
     IEnumerator Upload(string URL, string json, Action<UnityWebRequest> callback)
     {
         using (UnityWebRequest request = UnityWebRequest.Post(URL, json))
@@ -234,7 +255,7 @@ public class Network_manager : MonoBehaviour
             }
             else
             {
-                Debug.Log(request.downloadHandler.text);
+                Debug.Log("rest api:"+request.downloadHandler.text);
                 Downloaddata = request.downloadHandler.text;
             }
             callback(request);
@@ -249,12 +270,21 @@ public class Network_manager : MonoBehaviour
                 {
                     // ws://13.125.205.198:8080/gameroom/{gameroom}
                     Socket = new WebSocketSharp.WebSocket("ws://13.125.205.198:8080/gameroom/" + SERVICE_NAME);
-                    Socket.OnMessage += Recv;
+                    Socket.OnMessage += (sender, e) =>
+                    {
+                        if (Socket.Ping()&&!socketsend)
+                        {
+                            string data = e.Data;
+                            SocketMessage(data);
+                        }
+                    };
                     Socket.OnClose += CloseeConnect;
+                    Socket.OnError += OnError;
                     RoomId = int.Parse(SERVICE_NAME);
+                    Debug.LogError("socket connected");
                 }
                 catch { }
-            Socket.ConnectAsync();
+            Socket.Connect();
             SendSocketMessage("CHECK", RoomId);
         }
         catch (Exception e)
@@ -262,9 +292,13 @@ public class Network_manager : MonoBehaviour
             Debug.Log(e.ToString());
         }
     }
+    private void OnError(object sender, WebSocketSharp.ErrorEventArgs e)
+    {
+        Console.WriteLine(e.Message);
+    }
     public void CloseeConnect(object sender, CloseEventArgs e)
     {
-        Debug.Log(e.Reason);
+        Debug.LogWarning(e.Reason);
         DisconnectServer();
     }
 
@@ -298,7 +332,7 @@ public class Network_manager : MonoBehaviour
         format.gameroomId = RoomId;
         string json = JsonUtility.ToJson(format);
         Debug.Log(json);
-        SendJsonSocket(json);
+       SendJsonSocket(json);
     }
     public void SendDiceMessage(int Dice)
     {
@@ -307,7 +341,7 @@ public class Network_manager : MonoBehaviour
         format.gameroomId = RoomId;
         string json = JsonUtility.ToJson(format);
         Debug.Log(json);
-        SendJsonSocket(json);
+       SendJsonSocket(json);
     }
     public void SendWordMessage(string word)
     {
@@ -316,7 +350,7 @@ public class Network_manager : MonoBehaviour
         format.gameroomId = RoomId;
         string json = JsonUtility.ToJson(format);
         Debug.Log(json);
-        SendJsonSocket(json);
+       SendJsonSocket(json);
     }
     public void SendPlayMessage(bool message)
     {
@@ -338,58 +372,129 @@ public class Network_manager : MonoBehaviour
         Debug.Log(json);
         SendJsonSocket(json);
     }
+    public void SendGameResultMessage(bool message)
+    {
+        resultFormat format = new resultFormat();
+        format.type = "RESULT";
+        format.gameroomId = RoomId;
+        if (message == true)
+            format.winner = "my";
+        else if (message == false)
+            format.winner = "other";
+        string json = JsonUtility.ToJson(format);
+        Debug.Log(json);
+        SendJsonSocket(json);
+    }
     public void SendJsonSocket(string json)
     {
-        if (!Socket.IsAlive)
-            return;
-        try
-        {
-            Socket.Send(json);
+        socketsend = true;
+        if (!Socket.IsAlive) {
+            Debug.Log(Socket.IsAlive);
         }
-        catch (Exception)
+        else
         {
-            throw;
+            while(true){
+                if (Socket.Ping())
+                    try
+                    {
+                        Socket.Send(json);
+                        Debug.Log("socket:" + json);
+                        socketsend = false;
+                        break;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+            }
         }
     }
-    public string GetDownloaddata()
+    public void SocketMessage(string Data)
     {
-        return Downloaddata;
-    }
-    public void Recv(object sender, MessageEventArgs e)
-    {
-        Debug.Log(e.Data);
-        Debug.Log("NOPE");//보내는거랑 받는거랑 같이 할때 에러 발생
-        Debug.Log(e.RawData);
-        
-        if (e.Data.Contains("EMOJI"))
+        Debug.Log(Data);
+        if (Data.Contains("EMOJI"))
         {
-            Emoji = JsonUtility.FromJson<emojiFormat>(e.Data);
-            StartCoroutine(GameObject.Find("EmojiManager").GetComponent<Emoji_Manger>().OtherPlayerEmoji(Emoji.emoji));
-        }
-        if (e.Data== "Players are ready. Choose the word!")
-        {
+            Emoji = JsonUtility.FromJson<emojiFormat>(Data);
+            _actions.Enqueue(() => StartCoroutine(GameObject.Find("EmojiManager").GetComponent<Emoji_Manger>().OtherPlayerEmoji(Emoji.emoji)));
 
         }
-        if (e.Data == "Word matching is finished!")
+        if (Data.Contains("WORD"))
         {
-            SendDiceMessage(GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().DiceStart());
+            Word = JsonUtility.FromJson<WordFormat>(Data);
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().SelectWord(Word.wordForCounterpart));
+
         }
-        if (e.Data == data.user_id+" goes first")
+        if (Data == "Players are ready. Choose the word!")
         {
-            Debug.Log("RIGHT");
-            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("my");
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().get_word(GameObject.Find("GameManger").GetComponent<gamemanager>().get_roomcharacter(), GameObject.Find("GameManger").GetComponent<gamemanager>().get_roomcount()));
         }
-        else if (e.Data.Contains(" goes first"))
+        if (Data == "Word matching is finished!")
         {
-            GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("other");
+            _actions.Enqueue(() => SendDiceMessage(GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().DiceStart()));
+            //안에서 함수 호출하면 에러가 발생
         }
-        if (e.Data == "DRAW. Roll the dice again")
+        if (Data.Contains("counterpart's dice number"))
         {
-            SendDiceMessage(GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().DiceStart());
+            _actions.Enqueue(() => {
+                int result = int.Parse(Regex.Replace(Data, @"\D", ""));
+                GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().OtherDiceStart(result);
+            });
+            //안에서 함수 호출하면 에러가 발생
+        }
+        if (Data.Contains(" goes first"))
+        {
+            _actions.Enqueue(() => InvokeTurnStart(Data));
+            _actions.Enqueue(() => StartCoroutine(GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().closedicepanel()));
+        }
+        if (Data.Contains("The winner is"))
+        {
+            _actions.Enqueue(() => InvokeResult(Data));
+        }
+        if (Data.Contains("DRAW"))
+        {
+            _actions.Enqueue(() => SendDiceMessage(GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().DiceStart()));
+        }
+        if (Data == "Two players are in the gameroom. Start the game!")
+        {
+            _actions.Enqueue(() => GameObject.Find("WaitingRoomManager(Clone)").GetComponent<WaitingRoom_Manager>().enterotherplayer());
+        }
+        if (Data == "-1")
+        {
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().OtherVerification(-1));
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("my"));
+        }
+        if (Data == "1")
+        {
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().OtherVerification(1));
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("my"));
         }
     }
-
-}
+        void InvokeTurnStart(string Data)
+        {
+            if (Data.Contains(login_data.user_id))
+                _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("my"));
+            else
+                _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().TurnStart("other"));
+        }
+    void InvokeResult(string Data)
+    {
+        if (Data.Contains(login_data.user_id))
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().GameResult(true));
+        else
+            _actions.Enqueue(() => GameObject.Find("HangmanManger(Clone)").GetComponent<hangman_manager>().GameResult(false));
+    }
+    private void FixedUpdate()
+        {
+            // Work the dispatched actions on the Unity main thread
+            while (_actions.Count > 0)
+            {
+                if (_actions.TryDequeue(out var action))
+                {
+                    action?.Invoke();
+                }
+            }
+        }
+    }
 
 
 

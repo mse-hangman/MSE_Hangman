@@ -18,7 +18,7 @@ public class Emoji_Manger : MonoBehaviour
         nowEmoji = Instantiate(Emoji[index], EmojiPositon.GetComponent<RectTransform>());
         nowEmoji.transform.parent = this.transform;
         Emojicheck = false;
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(3);
         Emojicheck = true;
         Destroy(nowEmoji);
         yield return 0;
@@ -36,11 +36,10 @@ public class Emoji_Manger : MonoBehaviour
     }
     public IEnumerator OtherPlayerEmoji(int index)
     {
+        Debug.Log("enter");
         other_nowEmoji = Instantiate(Emoji[index], other_EmojiPositon.GetComponent<RectTransform>());
         other_nowEmoji.transform.parent = this.transform;
-        Emojicheck = false;
-        yield return new WaitForSeconds(10);
-        Emojicheck = true;
+        yield return new WaitForSeconds(3);
         Destroy(other_nowEmoji);
         yield return 0;
     }

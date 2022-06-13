@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using UnityEngine.EventSystems;
 
 public class gamemanager : MonoBehaviour
 {
@@ -17,21 +18,32 @@ public class gamemanager : MonoBehaviour
     public GameObject network_manager;
     public GameObject ui_manager;
     public GameObject hangman_manager;
+    public GameObject hangman_manager_original;
     public GameObject emoji_manager;
     public GameObject waiting_manager_instance;
     public GameObject waiting_manager;
+    public GameObject AudioManager;
     public Room_List myroom;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
         network_manager=Instantiate(network_manager);
         ui_manager = Instantiate(ui_manager);
+        AudioManager = Instantiate(AudioManager);
         SceneManager.sceneLoaded += OnSceneLoaded;
         SetResolution();
         myroom = new Room_List();
 
         getter = new List<string>();
         ui_manager.GetComponent<ui_manager>().SignupListner();
+    }
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Click");
+            AudioManager.GetComponent<AudioManager>().PlaySFXSound("Click");
+        }
     }
     private void SetResolution()
     {
@@ -40,13 +52,17 @@ public class gamemanager : MonoBehaviour
 
         Screen.SetResolution(setWidth, setHeight, false);
     }
+    public void OnMouseDown()
+    {
+       
+    }
     public void log_in()
     {
         getter=ui_manager.GetComponent<ui_manager>().LogInButton();
         StartCoroutine(network_manager.GetComponent<Network_manager>().LoginData(getter[0], getter[1],(Message)=> {
             message = Message;
             Debug.Log(message);
-            if (message == "login fail")//테스트를 위해 바꿈
+            if (message == "login success")//테스트를 위해 바꿈
             {
                 SceneManager.LoadScene("LobbyScene");
             }
@@ -114,7 +130,6 @@ public class gamemanager : MonoBehaviour
         StartCoroutine(network_manager.GetComponent<Network_manager>().MakeRoom(getter[0], getter[1], getter[2], (Message) =>
          {
                 message = Message;
-                Debug.Log(message.Length);
                 string id_temp = message.Substring(28,43-28);
                 Debug.Log(id_temp);
                 myroom.gameroomId = int.Parse(Regex.Replace(id_temp, @"\D", ""));
@@ -136,6 +151,7 @@ public class gamemanager : MonoBehaviour
         myroom.wordCount = int.Parse(myroom_temp.GetComponent<RoomComponent>().wordCount.text.ToString());
         Debug.Log("room id :" + myroom.gameroomId + "room character :" + myroom.gameCharacter + "wordcount :" + myroom.wordCount);
     }
+    //roomid 를 통해 캐릭터 정보 전달 , word count 전달
     public void enter_room(int index)
     {
         Debug.Log("index"+index);
@@ -145,9 +161,12 @@ public class gamemanager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log(scene.name);
+        AudioManager.GetComponent<AudioManager>().PlayBGMSound();
         if (scene.name == "LobbyScene")
         {
+            network_manager.GetComponent<Network_manager>().DisconnectServer();
             get_roomlist();
+            get_rankinglist();
             ui_manager.GetComponent<ui_manager>().MakeRoom();
         }
         if (scene.name=="WaitingRoomScene")
@@ -161,42 +180,47 @@ public class gamemanager : MonoBehaviour
         }
         if (scene.name == "GameScene")
         {
-            hangman_manager = Instantiate(hangman_manager);
+            hangman_manager = Instantiate(hangman_manager_original);
+            emoji_manager = GameObject.Find("EmojiManager");
             ui_manager.GetComponent<ui_manager>().HangmanButtonSet();
-            get_word();
+            ui_manager.GetComponent<ui_manager>().Hint();
+            //get_word();
         }
+    }
+    public string get_roomcharacter()
+    {
+        return myroom.gameCharacter;
+    }
+    public int get_roomcount()
+    {
+        return myroom.wordCount;
     }
     public void start_game()
     {
         SceneManager.LoadScene("GameScene");
         network_manager.GetComponent<Network_manager>().SendStartMessage();
     }
-    public void get_word()
-    {
-        string threeword;
-        hangman_manager.GetComponent<hangman_manager>().SetCharacter(myroom.gameCharacter);
-        StartCoroutine(network_manager.GetComponent<Network_manager>().GetThreeWord(myroom.wordCount,(Message) => {
-            threeword = Message;
-            Debug.Log(threeword);
-            hangman_manager.GetComponent<hangman_manager>().GetWord(threeword);
-            ui_manager.GetComponent<ui_manager>().ThreeWordButton();
-        }));
-    }
+
     public void get_roomlist()
     {
         StartCoroutine(network_manager.GetComponent<Network_manager>().GetRoomList((Message) => {
-            Room_List[] rooms = JsonHelper.FromJson<Room_List>("{\"Items\":" + Message + "}");
-            GameObject.Find("RoomListManager").GetComponent<RoomListmanager>().MakeRoom(rooms);
+            if (message != null)
+            {
+                Room_List[] rooms = JsonHelper.FromJson<Room_List>("{\"Items\":" + Message + "}");
+                GameObject.Find("RoomListManager").GetComponent<RoomListmanager>().MakeRoom(rooms);
+            }
+        }));
+    }
+    public void get_rankinglist()
+    {
+        StartCoroutine(network_manager.GetComponent<Network_manager>().GetRankingList((Message) => {
+            Ranking_List[] ranking = JsonHelper.FromJson<Ranking_List>("{\"Items\":" + Message + "}");
+            GameObject.Find("RankingManager").GetComponent<RankingListmanager>().MakeRanking(ranking);
         }));
     }
     public void select_word(int index)
     {
         List<string> word = GameObject.Find("HangmanWord").GetComponent<Word>().getThreeWord();
-        hangman_manager.GetComponent<hangman_manager>().SelectWord(index);
         network_manager.GetComponent<Network_manager>().SendWordMessage(word[index]);
-    }
-    public void hangman_start()
-    {
-        
     }
 }

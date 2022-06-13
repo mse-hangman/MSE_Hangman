@@ -1,9 +1,13 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AudioManager
+    - CloseBtn
     - Emoji_Manger
     - LoadManager
     - Network_manager
+    - RankingComponent
+    - RankingListmanager
     - RoomComponent
     - RoomListmanager
     - TurnTimer
@@ -104,11 +108,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3120}
     - Class: 114
-      Script: {instanceID: 4036}
+      Script: {instanceID: 4038}
     - Class: 114
-      Script: {instanceID: 4244}
+      Script: {instanceID: 4076}
     - Class: 114
-      Script: {instanceID: 5012}
+      Script: {instanceID: 4248}
+    - Class: 114
+      Script: {instanceID: 5016}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -157,7 +163,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3016}
     - Class: 114
-      Script: {instanceID: 3576}
+      Script: {instanceID: 3578}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -220,21 +226,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3120}
     - Class: 114
-      Script: {instanceID: 3314}
+      Script: {instanceID: 3316}
     - Class: 114
-      Script: {instanceID: 3576}
+      Script: {instanceID: 3578}
     - Class: 114
-      Script: {instanceID: 3812}
+      Script: {instanceID: 3814}
     - Class: 114
-      Script: {instanceID: 3980}
+      Script: {instanceID: 3982}
     - Class: 114
-      Script: {instanceID: 4162}
+      Script: {instanceID: 4076}
     - Class: 114
-      Script: {instanceID: 4244}
+      Script: {instanceID: 4166}
     - Class: 114
-      Script: {instanceID: 5012}
+      Script: {instanceID: 4248}
     - Class: 114
-      Script: {instanceID: 5054}
+      Script: {instanceID: 5016}
+    - Class: 114
+      Script: {instanceID: 5058}
+    - Class: 114
+      Script: {instanceID: 18990}
+    - Class: 114
+      Script: {instanceID: 18996}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -268,6 +280,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
@@ -299,21 +315,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3120}
     - Class: 114
-      Script: {instanceID: 3576}
+      Script: {instanceID: 3254}
     - Class: 114
-      Script: {instanceID: 4064}
+      Script: {instanceID: 3578}
     - Class: 114
-      Script: {instanceID: 4168}
+      Script: {instanceID: 4066}
     - Class: 114
-      Script: {instanceID: 4174}
+      Script: {instanceID: 4172}
     - Class: 114
-      Script: {instanceID: 4244}
+      Script: {instanceID: 4178}
     - Class: 114
-      Script: {instanceID: 4264}
+      Script: {instanceID: 4248}
     - Class: 114
-      Script: {instanceID: 4592}
+      Script: {instanceID: 4268}
     - Class: 114
-      Script: {instanceID: 5018}
+      Script: {instanceID: 4596}
+    - Class: 114
+      Script: {instanceID: 5022}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -366,7 +384,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3120}
     - Class: 114
-      Script: {instanceID: 19942}
+      Script: {instanceID: 4076}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -578,7 +596,7 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: edf49712b69480398df598415cb3f149
+      Hash: 6848c1513e0d4edbf4ee4ce52e3242a4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ui_manager
@@ -684,6 +702,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextContainer
+  - hash:
+      serializedVersion: 2
+      Hash: 50918a3b7a50f13aad01afe36be36111
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AudioManager
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -836,6 +860,12 @@ ScriptsOnlyBuild:
     className: WaitingRoom_Manager
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CloseBtn
+  - hash:
+      serializedVersion: 2
       Hash: b424b4eeb810aecb0ff91c62639241e9
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.Experimental.U2D.Animation
@@ -866,13 +896,13 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: d4d13116491ebe1cb6c9b6814b94c3f9
+      Hash: f52dfce2f37b94a6ab4e23dc0abd7f66
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: gamemanager
   - hash:
       serializedVersion: 2
-      Hash: 6f2cfa21b9e50819aa057fd1e511bf02
+      Hash: 22d5c8ed8883b343c7c12e5792fa7093
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: hangman_manager
@@ -978,6 +1008,18 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RoomComponent
+  - hash:
+      serializedVersion: 2
+      Hash: a9311f84329e38f1f544c39eb954e09d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RankingListmanager
+  - hash:
+      serializedVersion: 2
+      Hash: c42a767638509fcdc88c4bccb6f4d1b6
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RankingComponent
   platform: 5
   scenePathNames:
   - Assets/Scenes/LoginScene.unity

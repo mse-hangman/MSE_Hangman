@@ -47,9 +47,16 @@ MonoBehaviour:
     type: 3}
   ui_manager: {fileID: 1033877160586247820, guid: 519d638e607ce6549b333f8473ca8d1d,
     type: 3}
-  scene_manager: {fileID: 9032372707241323200, guid: ba80472247a4cd44cb99146903924133,
-    type: 3}
   hangman_manager: {fileID: 8320688391724577079, guid: 3650c43d5b62bc0448d91ac879f9e259,
     type: 3}
   emoji_manager: {fileID: 9032372707241323200, guid: ba80472247a4cd44cb99146903924133,
     type: 3}
+  waiting_manager_instance: {fileID: 0}
+  waiting_manager: {fileID: 7696401521618480171, guid: 362ed13235059a94eb4ee628201cc254,
+    type: 3}
+  myroom:
+    gameroomId: 0
+    title: 
+    wordCount: 0
+    playerCount: 0
+    gameCharacter: 

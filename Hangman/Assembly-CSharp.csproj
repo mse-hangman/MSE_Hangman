@@ -56,20 +56,24 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\wordcount.cs" />
+    <Compile Include="Assets\Scripts\wordcount.cs" />
     <Compile Include="Assets\Scripts\TurnTimer.cs" />
+    <Compile Include="Assets\Scripts\RoomListmanager.cs" />
     <Compile Include="Assets\Scripts\ui_manager.cs" />
     <Compile Include="Assets\Scripts\Emoji_Manger.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\LoadManager.cs" />
     <Compile Include="Assets\Scripts\log_in.cs" />
     <Compile Include="Assets\Scripts\Word.cs" />
-    <Compile Include="Assets\WaitingRoom_Manager.cs" />
+    <Compile Include="Assets\Scripts\WaitingRoom_Manager.cs" />
+    <Compile Include="Assets\Scripts\CloseBtn.cs" />
     <Compile Include="Assets\Scripts\gamemanager.cs" />
     <Compile Include="Assets\Scripts\hangman_manager.cs" />
     <Compile Include="Assets\Scripts\sign_up.cs" />
     <Compile Include="Assets\Scripts\Network_manager.cs" />
-    <Compile Include="Assets\RoomListmanager.cs" />
-    <Compile Include="Assets\RoomComponent.cs" />
+    <Compile Include="Assets\Scripts\RoomComponent.cs" />
+    <Compile Include="Assets\Scripts\RankingListmanager.cs" />
+    <Compile Include="Assets\Scripts\RankingComponent.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -85,6 +89,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <None Include="Assets\ExternalAsset\uipack_fixed\Spritesheet\redSheet.xml" />
+     <None Include="Assets\Sound\CasualGameBGM05\ReadMe.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\JsonDotNet\link.xml" />
      <None Include="Assets\JsonDotNet\Assemblies\Windows\Newtonsoft.Json.XML" />
@@ -336,11 +341,11 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.1f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>Assets\Plugins\websocket-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets\JsonDotNet\Assemblies\Standalone\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>Assets\Plugins\websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.1f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
